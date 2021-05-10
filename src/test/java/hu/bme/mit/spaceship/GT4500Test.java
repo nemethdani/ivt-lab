@@ -150,15 +150,16 @@ public class GT4500Test {
 
   @Test
   public void firetorpedo_Single_Twice_BothEmpty() {
-    when(mockPrimaryTorpedoStore.isEmpty()).thenReturn(true);
+    when(mockPrimaryTorpedoStore.isEmpty()).thenReturn(false);
     when(mockPrimaryTorpedoStore.fire(1)).thenReturn(true);
     when(mockSecondaryTorpedoStore.isEmpty()).thenReturn(true);
 
     ship.fireTorpedo(FiringMode.SINGLE);
+    when(mockPrimaryTorpedoStore.isEmpty()).thenReturn(true);
     var res = ship.fireTorpedo(FiringMode.SINGLE);
 
     
-    verify(mockPrimaryTorpedoStore, times(0)).fire(1);
+    verify(mockPrimaryTorpedoStore, times(1)).fire(1);
     verify(mockSecondaryTorpedoStore, times(0)).fire(1);
     assertEquals(false, res);
   }
