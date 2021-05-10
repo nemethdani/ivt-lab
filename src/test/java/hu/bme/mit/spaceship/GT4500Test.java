@@ -132,6 +132,22 @@ public class GT4500Test {
 
   }
 
+  @Test
+  public void firetorpedi_Single_SecondEmpty(){
+    when(mockPrimaryTorpedoStore.isEmpty()).thenReturn(false);
+    when(mockPrimaryTorpedoStore.fire(1)).thenReturn(true);
+    when(mockSecondaryTorpedoStore.isEmpty()).thenReturn(true);
+    
+
+    ship.fireTorpedo(FiringMode.SINGLE);
+    var res=ship.fireTorpedo(FiringMode.SINGLE);
+
+    //kétszer süti el: amikor először lövünk, és második próbálkozásnál is rá kerül a sor
+    verify(mockPrimaryTorpedoStore, times(2)).fire(1);
+    verify(mockSecondaryTorpedoStore, times(0)).fire(1);
+    assertEquals(true, res);
+  }
+
 
   @Test
   public void fireTorpedo_All_Success() {
