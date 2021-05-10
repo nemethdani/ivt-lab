@@ -50,6 +50,21 @@ public class GT4500Test {
   }
 
   @Test
+  public void fireTorpedo_Single_Two_Alternating(){
+    when(mockPrimaryTorpedoStore.isEmpty()).thenReturn(false);
+    when(mockPrimaryTorpedoStore.fire(1)).thenReturn(true);
+    when(mockSecondaryTorpedoStore.isEmpty()).thenReturn(false);
+    when(mockSecondaryTorpedoStore.fire(1)).thenReturn(true);
+
+    ship.fireTorpedo(FiringMode.SINGLE);
+    ship.fireTorpedo(FiringMode.SINGLE);
+    
+    verify(mockPrimaryTorpedoStore, times(1)).fire(1);
+    verify(mockSecondaryTorpedoStore, times(1)).fire(1);
+  }
+
+
+  @Test
   public void fireTorpedo_All_Success() {
     // Arrange
 
