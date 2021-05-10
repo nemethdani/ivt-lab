@@ -39,7 +39,9 @@ public class GT4500Test {
     // Arrange
 
     when(mockPrimaryTorpedoStore.isEmpty()).thenReturn(false);
-    when(mockSecondaryTorpedoStore.isEmpty()).thenReturn(true);
+    when(mockSecondaryTorpedoStore.isEmpty()).thenReturn(false);
+    when(mockPrimaryTorpedoStore.fire(1)).thenReturn(true);
+    when(mockSecondaryTorpedoStore.fire(1)).thenReturn(true);
 
     // Act
     boolean result = ship.fireTorpedo(FiringMode.ALL);
@@ -52,7 +54,7 @@ public class GT4500Test {
     verify(mockPrimaryTorpedoStore, times(1)).fire(1);
 
     verify(mockSecondaryTorpedoStore, times(1)).isEmpty();
-    verify(mockSecondaryTorpedoStore, times(0)).fire(1);
+    verify(mockSecondaryTorpedoStore, times(1)).fire(1);
 
     assertEquals(true, result);
   }
